@@ -1,0 +1,133 @@
+<%= render "home/navigation" %>
+<div class="p-5 bg-[#f9f9fe]" ></div>
+<section class="bg-[#f9f9fe]">
+    <div class="flex flex-row flex-wrap justify-start content-start item-start px-10">
+        <div class="w-3/4 px-16">
+    
+            <div class="mb-10 shadow-md bg-white hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative rounded-lg">
+                <div class="flex flex-col flex-wrap justify-center content-center item-center">
+                    <!-- image section --> 
+                    <div class="">
+                        <img src="https://ghost.estudiopatagon.com/maktub/content/images/size/w950h500/2022/05/mixkit-man-holding-the-brim-of-a-yellow-fedora-that-covers-93-desktop-wallpaper.png" />
+                    </div>
+                    <!--title-->
+                    <div class="flex flex-col justify-center content-center item-center px-16">
+                            
+                            <div class="pt-10 pb-6 text-center">
+                                <span class="text-4xl font-semibold text-[#4b4870]"><%= @blog.title %></span>
+                            </div>
+
+                            <div class="pb-10 flex flex-row flex-wrap justify-center content-center">
+                                <div class="px-1">
+                                    <span class="text-sm font-semibold text-[#4b4870] ">Sep 05,2022</span>
+                                </div>
+                                <div class="px-1">
+                                    <span class="text-[#f0555f] font-black">-</span>
+                                </div>
+
+                                <div class="px-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline stroke-2 stroke-[#f0555f]">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22    1.668.337 2.555.337z" />
+                                    <span class="float text-[#5e6676]"><sub><%= @blog.comments.count%></sub></span>
+                                    </svg>
+                        
+                                </div>
+                                 <div class="px-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline stroke-2 stroke-[#f0555f] ">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z" />
+                            <span class="text-[#5e6676]"><sub><%= @blog.likes.count %></sub></span>
+                        </svg>
+                    </div>
+                            </div>
+                    </div>  
+                    <!--description-->
+                    <div class="px-16 pb-10 ">
+                        <span class="text-base text-[#5e6676] text-lg font-medium antialiased text-center"><%= @blog.description.to_s %></span>
+                    </div> 
+                    <div class="px-16 pb-10 ">
+                         <div class="flex flex-row flex-wrap justify-center content-center item-center">
+                        <div class="shadow-md bg-white hover:shadow-lg py-2 px-5 mr-2">
+                            <span>Getting Started</span>
+                        </div>
+                        <div class="shadow-md bg-white hover:shadow-lg py-2 px-5 mr-2">
+                            <span>Technology</span>
+                        </div>
+                        <div class="shadow-md bg-white hover:shadow-lg py-2 px-5 mr-2">
+                            <span>Travel</span>
+                        </div> 
+                    </div>
+                    </div>
+
+                    <div class="px-16 pb-10">
+                         <div class="flex flex-row flex-wrap justify-center content-center item-center">
+                        <div class="py-2 px-5 mr-2">
+                            <% if @likes == nil%>
+                                <%= render partial:  "likes/like" , locals: {like: Like.new} %>
+                                
+                            <% else%>
+                            <%= turbo_stream_from "unlike" %>
+                            <%= render partial:  "likes/unlike" , locals: {unlike: Like.new} %>
+
+                            <%end%>
+                        </div>
+                        </div>
+                    </div>
+
+
+
+            </div>  
+         </div>
+          <div class="p-10 mb-10 shadow-md bg-white hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative rounded-lg">
+                <div class="flex flex-col flex-wrap justify-center content-center item-center">
+                      
+                    <div class="flex flex-row justify-center">
+                      <div>
+                      <img src="https://ghost.estudiopatagon.com/maktub/content/images/size/w120h120/2022/05/mixkit-desks-in-a-cool-co-working-space-with-an-office-dog-399-desktop-wallpaper.jpg" class="rounded-full"/>
+                    </div>
+                    </div>
+                    <div class="text-center p-3">
+                        <span class="text-2xl text-[#5e6676]"><%=@blog.user.name.capitalize%></span>
+                    </div>  
+                    <div class="px-10 text-center leading-7">
+                        <span class=" text-[#5e6676] text-base font-medium antialiased text-center">Hello! My name is shubham, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</span>
+                    </div>
+                    <div class="flex flex-row justify-center content-center item-center pt-6">
+                        <div class="mr-3">
+                            <svg class="h-6 w-6 text-[#4267B2]"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+                        </div>
+                        <div class="mr-3">
+                            <svg class="h-6 w-6 text-red-600"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
+                        </div>
+                        <div class="mr-3">
+                            <svg class="h-6 w-6 text-[#1DA1F2]"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" /></svg>
+                        </div>
+                </div>
+                             
+            </div>  
+         </div>
+         <div class="p-10 mb-10 shadow-md bg-white hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative rounded-lg">
+                <div class="flex flex-col flex-wrap justify-center content-center item-center">
+                    <div class="text-center">
+                        <span class="text-4xl font-semibold text-[#4b4870]">Comments</span>
+                    </div>
+                    <div class="pt-5 w-full">
+                        <div class="w-6/12 mx-auto">
+                         <%= render partial: "comments/form", locals: { comment: Comment.new } %>
+                        </div>
+                         <%= turbo_stream_from @blog, :comments %>
+                         
+                         <div id="<%= "#{dom_id(@blog)}_comments" %>">
+                            <%= render @blog.comments.order(created_at: :desc) %>
+                        </div>
+                    </div>               
+            </div>  
+         </div>
+        </div>
+
+    <!-- quicklinks -->
+        <%= render "home/quicklinks" %> 
+    </div>
+</section>
+
+
+<%= render "home/footer" %>

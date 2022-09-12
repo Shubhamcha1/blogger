@@ -1,0 +1,64 @@
+        
+    <div class="w-1/4 flex flex-col flex-wrap justify-start content-start">    
+        <div class="mb-10">
+            <span class="text-2xl font-semibold text-[#4b4870]">Latest Articles</span>   
+            <% @latest.each do | l | %>
+            <div class="flex flex-col flex-wrap justify-start content-start mt-6 hover:bg-white hover:shadow-md">
+                <div class="flex flex-row flex-wrap justify-start">
+                        <div class="w-3/12">  
+                            <img src="https://ghost.estudiopatagon.com/maktub/content/images/size/w300h300/2022/05/mixkit-man-holding-the-brim-of-a-yellow-fedora-that-covers-93-desktop-wallpaper.png">
+                        </div>
+                        <div class="w-9/12 px-3 flex flex-col justify-start">
+                            <div class="mt-1">
+                            <span class="text-ls font-semibold text-[#4b4870]"><%= link_to l.title,blog_path(l.id)%></span> 
+                            </div>
+                        <div class="">
+                            <span class="text-xs font-semibold text-[#4b4870]"><%= l.created_at.to_formatted_s(:short) %></span>
+                        </div>
+                        </div>
+                </div>
+            </div>
+            <%end%>         
+        </div>
+
+        <!--recently viewed panel -->
+        <% if user_signed_in? %>
+        <div class="recent_viewed mb-10">
+            <span class="text-2xl font-semibold text-[#4b4870]">Recently Viewed</span>   
+            <% @viewed.each do | v |%>
+            <div class="flex flex-col flex-wrap justify-start content-start mt-6 hover:bg-white hover:shadow-md ">
+                <div class="flex flex-row flex-wrap justify-start content-start">
+                        <div class="w-3/12">  
+                            <img src="https://ghost.estudiopatagon.com/maktub/content/images/size/w300h300/2022/05/mixkit-man-holding-the-brim-of-a-yellow-fedora-that-covers-93-desktop-wallpaper.png">
+                        </div>
+                        <div class="w-9/12 px-3 flex flex-col justify-start content-start">
+                           <div class="mt-1">
+                            <span class="text-ls font-semibold text-[#4b4870]"><%=link_to v.blog.title,blog_path(v.id) %></span> 
+                        </div>
+                        <div class="">
+                            <span class="text-xs font-semibold text-[#4b4870]"><%= v.blog.created_at.to_formatted_s(:short) %></span>
+                        </div>
+                        </div>
+                </div>
+            </div>
+            <% end %>
+        </div>
+        <% end %>
+        <!-- social links -->
+        <div class="mb-10">
+             <span class="text-2xl font-semibold text-[#4b4870]">Follow Me!</span>
+                <div class="flex flex-row justify-start content-start item-start pt-6">
+                    <div class="mr-3">
+                    <svg class="h-10 w-10 text-[#4267B2]"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+                </div>
+                <div class="mr-3">
+                <svg class="h-10 w-10 text-red-600"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
+                </div>
+                <div class="mr-3">
+                <svg class="h-10 w-10 text-[#1DA1F2]"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" /></svg>
+                </div>
+                </div>
+                
+        </div>
+
+    </div>

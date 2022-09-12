@@ -1,0 +1,62 @@
+<%=render "home/navigation" %>
+
+ <% if flash[:notice].present? %>
+  <p><%= flash[:notice] %></p>
+<% end %>
+
+<% if flash[:alert].present? %>
+  <p><%= flash[:alert] %></p>
+<% end %>
+<div class="h-screen flex flex-col items-center content-center justify-center"> 
+
+<main class="flex flex-col items-center content-center justify-center">
+
+<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 border-2 border-solid border-[#4b4870] rounded-md">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600" alt="Workflow">
+      <h2 class="mt-6 text-center text-3xl tracking-tight font-bold text-[#4b4870]">Sign in</h2>
+    </div>
+    <%= form_for(resource, as: resource_name, url: user_session_path, method: :create, class:"mt-8 space-y-6") do |f| %>
+ 
+      <div class="rounded-md shadow-sm -space-y-px">
+        <div>
+        <!--<label for="email-address" class="sr-only">Email address</label>-->
+         
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" ,class:"appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-[#4b4870] focus:border-[#4b4870] focus:z-10 sm:text-sm",placeholder:"Email" ,:required => true%>
+        </div>
+        <div>
+          <label for="password" class="sr-only">Password</label>
+          
+          <%= f.password_field :password, autocomplete: "current-password",class:"appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-[#4b4870] focus:border-[#4b4870] focus:z-10 sm:text-sm" ,:required => true%>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center justify-between">
+        
+        <div class="text-sm mt-5">
+          <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+          <%= link_to "Forgot your password?", new_password_path(resource_name),class:"font-medium text-[#4b4870] hover:text-indigo-500" %><br />
+        <% end %>
+       
+       <!--   <a href="#" class="font-medium text-[#6daffe] hover:text-indigo-500"> Forgot your password? </a>-->
+        </div>
+      </div>
+
+      <div class="">
+          <%= f.submit "Login",class:"group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#4b4870] hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 my-1" %>
+      </div>
+       <div class="flex item-center flex-col justify-center">
+          <div class="pt-5 text-gray-900">
+            <p>Don't have an account? <span class="text-[#4b4870]">
+            <%= render "devise/shared/links" %></span></p>
+          </div>
+      </div>
+    <%end%>
+  </div>
+</div>
+</main>
+</div>
+ 
+
+<%= render "home/footer" %>
