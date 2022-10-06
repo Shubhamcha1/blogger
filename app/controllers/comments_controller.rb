@@ -4,12 +4,12 @@ class CommentsController < ApplicationController
 	  def create
     @blog = Blog.find(params[:blog_id])
     @comment = @blog.comments.new(comment_params)  
-    @reply_id = params[:comment][:comment_id].to_i
-  
-  if @reply_id != 0
+    @master_comment_id = params[:comment][:comment_id].to_i
+
+  if @master_comment_id != 0
       respond_to do |format|
       if @comment.save 
-         comment_reply(@reply_id, @comment.id)
+        comment_reply(@master_comment_id, @comment.id)
         format.turbo_stream { render turbo_stream: turbo_stream.replace('comment_form', partial: 'comments/form', locals: { comment: Comment.new })}
         format.html { render partial: 'comments/form', locals: { comment: Comment.new }}
       else
@@ -44,11 +44,6 @@ class CommentsController < ApplicationController
   end
 
 
-  def replying 
-
-  end
-
-
   def delete
       delete = Comment.find(params[:id])
       if delete.destroy           
@@ -61,22 +56,12 @@ class CommentsController < ApplicationController
 
   
 
-  def comment_reply(r_id,c_id)
-      @reply = CommentReply.new
-      @reply.comment_id = c_id
-      @reply.reply_id = r_id
-    respond_to do |format|
-      if @reply.save 
-
-        format.turbo_stream { render turbo_stream: turbo_stream.replace('comment_form', partial: 'comments/form', locals: { comment: Comment.new }) }
-        format.html { render partial: 'comments/form', locals: { comment: Comment.new }}
-        
-      else
-        format.turbo_stream { render turbo_stream: turbo_stream.replace('comment_form', partial: 'comments/form', locals: { comment: @comment }) }
-        format.html { render partial: 'comments/form', locals: { comment: @comment }}
-      end
-    end
-
+  def comment_reply(master_comment_id,reply_comment_id)
+    @blog = Blog.find(params[:blog_id]) 
+      @reply = @blog.comment_replies.new
+      @reply.comment_id = reply_comment_id
+      @reply.reply_id = master_comment_id
+      @reply.save!
   end
 
 

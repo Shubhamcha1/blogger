@@ -12,5 +12,7 @@ class Comment < ApplicationRecord
 
   	validates_presence_of :body
 
-  	# after_create_commit { broadcast_prepend_to [comment, :comments], target: "#{dom_id(comment)}_comments" }
+   	#after_create_commit { broadcast_prepend_to [@comment,:comments], target: "#{dom_id(comment)}_comments" }
+
+
 end

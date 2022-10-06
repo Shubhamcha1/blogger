@@ -80,3 +80,6 @@ gem "hotwire-rails", "~> 0.1.3"
 
 
 gem 'acts-as-taggable-on', '~> 9.0', '>= 9.0.1'
+
+
+gem 'jquery-rails', '~> 4.4'

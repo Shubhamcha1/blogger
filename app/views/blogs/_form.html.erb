@@ -1,6 +1,6 @@
 <%= form_with(model: blog, class: "contents") do |form| %>
   <% if blog.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3" id="notification" >
       <h2><%= pluralize(blog.errors.count, "error") %> prohibited this blog from being saved:</h2>
 
       <ul>
@@ -10,30 +10,34 @@
       </ul>
     </div>
   <% end %>
-<div class="inline">
+<div class="py-2">
+  <label for="title" class="block mb-2 text-lg font-medium text-[#4b4870] dark:text-gray-400">Title</label>
+  <%= form.text_field :title ,:required => true ,class:"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+</div>
+<div class="py-2">
+  <label for="master_categories_id" class="block mb-2 text-lg font-medium text-[#4b4870] dark:text-gray-400">Select Category</label>
+ <%= form.select :master_categories_id, @categories.map { |t| [t.name, t.id]}, {}, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ,:required => true %>
+</div>
+<div class="py-2">
+<!--<%= form.select :tag_list, @categories.map { |t| [t.name, t.id]}, { :multiple => true }, class: "select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ,:required => true %>
+-->
+  <label for="tag_list" class="block mb-2 text-lg font-medium text-[#4b4870] dark:text-gray-400">Tags</label>
+  <select class="select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" multiple="multiple" id="blog_tag_list" >
+  <option>orange</option>
+  <option>white</option>
+  <option>purple</option>
+  </select>
 
-  <%= form.text_field :title ,:required => true  %>
+<input type="hidden" name="blog[tag_list]" id="tag_list" />
 
 </div>
-<div class="inline">
 
- <%= form.select :master_categories_id, @categories.map { |t| [t.name, t.id]}, {}, class: "form-control" ,:required => true %>
+<div class="py-2">
+  <label for="description" class="block mb-2 text-lg font-medium text-[#4b4870] dark:text-gray-400">Description</label>
+  <%= form.rich_text_area :description ,:required => true ,class:"overflow-auto block p-2.5 w-full h-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"%>
 </div>
-<div class="inline">
-
-  <%= form.text_field :tag_list ,:required => true %>
-</div>
-
-<div class="inline">
-
-  <%= form.rich_text_area :description ,:required => true %>
-</div>
-  <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  <div class="py-2">
+    <%= form.submit class: "blog_submit text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 cursor-pointer" %>
   </div>
-
-
-
-
-  
 <% end %>
+

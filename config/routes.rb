@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   
 resources :blogs do
-resources :comments, only: %i[create]
+resources :comments, only: %i[create reply]
 
 end 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -13,6 +13,9 @@ end
   root to: "home#index"
 
 get "category" ,to: "blogs#categories_blog_list" ,as: :categories_list
+
+#list of user blogs with edit option
+get "my_blogs" ,to: "blogs#my_blogs", as: :my_blogs
 
 #like the blogs in blogger 
   
@@ -28,5 +31,9 @@ get "unlike" ,to: "likes#unlike" , as: :unlike
 
   get "delete_comment" ,to: "comments#delete" ,as: :delete_comment
 
+#profile route 
 
+  get "/user/profile" ,to: "profile#profile" ,as: :user_profile
+
+  get "/user/blog" , to: "profile#userblog" ,as: :user_blog
 end

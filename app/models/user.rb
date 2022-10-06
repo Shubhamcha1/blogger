@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :user_blog_visits
   has_many :comments
 
-  validates :email, :password, presence: true
+  validates :email, presence: true
 
 end
 

@@ -8,6 +8,7 @@ class Blog < ApplicationRecord
 	has_many :comments
 	has_many :likes
 	has_many :user_blog_visits
+	has_many :comment_replies
 	belongs_to :master_categories ,class_name:"MasterCategory"
 	belongs_to :user
 	has_rich_text :description

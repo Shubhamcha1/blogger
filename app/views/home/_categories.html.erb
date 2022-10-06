@@ -1,9 +1,11 @@
-<section class="bg-[#f9f9fe] px-20 py-8">
-    <div class="flex flex-row flex-wrap justify-start content-center px-5">
-      <%@categories.each do | c |%>
-        <div class="rounded-full border-2 border-solid border-gray px-5 py-1 mr-2 text-gray-500  hover:bg-[#4b4870] hover:text-white hover:border-[#4b4870] hover:shadow-md">
-            <%=link_to c.name, categories_list_path(cat_id: c.id ) %>
-        </div>
+<section class="bg-[#f9f9fe] px-24 py-8">
+    <div class="flex flex-row flex-wrap justify-start content-center">
+        <%@categories.each do | c |%>
+            <%if params["cat_id"] == c.id.to_s %>
+             <%=link_to c.name, categories_list_path(cat_id: c.id ),class:"rounded-full border-2 border-solid border-[#4b4870] px-5 py-1 mr-2 text-white bg-[#4b4870]" %>
+            <%else%>
+             <%=link_to c.name, categories_list_path(cat_id: c.id ),class:"rounded-full border-2 border-solid border-gray px-5 py-1 mr-2 text-gray-500  hover:bg-[#4b4870] hover:text-white hover:border-[#4b4870] hover:shadow-md " %>
+            <%end%>
         <%end%>
     </div>
 </section>

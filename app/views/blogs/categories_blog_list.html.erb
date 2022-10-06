@@ -1,57 +1,36 @@
 <%= render "home/navigation"%>
-
-
+<!--categories button-->
 <%= render "home/categories"%>
-<section class="bg-[#f9f9fe]">
-  <div class="flex flex-row flex-wrap justify-center content-center item-start px-20 py-10 ">
-
+<!--Categories listing tiles-->
+<section class="bg-[#f9f9fe] px-24">
+  <div class="flex flex-row flex-wrap justify-self-auto content-between">
+   <%if @cat_blog.empty?()%>
+   <%end%>
       <%@cat_blog.each do | b | %>
-
-      <div class="m-5 p-10 bg-white w-80 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 flex flex-col flex-wrap justify-center content-center">
-        <div class="flex flex-col flex-wrap justify-center content-center">
-              <div class="flex flex-row justify-center content-center">
-                  <img src="https://ghost.estudiopatagon.com/maktub/content/images/size/w300h300/2022/05/mixkit-man-holding-the-brim-of-a-yellow-fedora-that-covers-93-desktop-wallpaper.png" class="w-40 h-36 rounded-full">
-              </div>
-              <div class="text-center mt-5">
-                <p class="text-2xl font-semibold text-[#4b4870]"><%= b.title %></p>
-              </div>
-        </div>
-        <div class="">
-          <div class="flex flex-row flex-wrap justify-center content-center">
-                <div class="px-3 mt-5 py-2">
-                      <span class="text-sm font-semibold text-[#4b4870] ">Sep 05,2022</span>
-                </div>
-                            <div class="py-2 px-3 mt-5">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline stroke-2 stroke-[#f0555f]">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22    1.668.337 2.555.337z" />
-                            <span class="float text-[#5e6676]"><sub><%=b.comments.count%></sub></span>
-                        </svg>
-                        
-                            </div>
-                            <div class="py-2 px-2 mt-5">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline stroke-2 stroke-[#f0555f] ">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z" />
-                            <span class="text-[#5e6676]"><sub><%=b.likes.count%></sub></span>
-                        </svg>
-                    </div>
-
-                        </div>
-                    </div> 
-
-        <div class="description mt-5">
-            <p class="leading-7 text-[#5e6676] text-center text-md font-medium"><%= b.description.to_s.slice(34..180)%>...
-            </p>
-            <div class="mt-6 flex flex-row justify-center">
-              <div>
-              <%= link_to "Continue Reading" ,blog_path(b.id), class:"focus:outline-none text-white bg-[#4b4870] hover:bg-[#4b4870] focus:ring-4 focus:ring-[#4b4870] font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-[#4b4873] dark:hover:bg-purple-700 dark:focus:ring-[#4b4873]" %>
-              </div>
+       <div class="w-4/12 mb-6">
+        <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <% if b&.rich_text_description&.embeds&.first&.url != nil %>
+                  <img src="<%= b&.rich_text_description&.embeds&.first&.url %>" class="rounded-tl-md rounded-tr-md h-60 w-full" >
+            <%else%>
+                  <%= image_tag "#{b.master_categories.name.downcase}.jpeg", class:"rounded-md h-60 w-full"%>
+            <%end%>
+            <div class="p-5">
+              <a href="#">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><%=h truncate(b.title.capitalize, :length => 25) %></h5>
+              </a>
+            <div class="h-24">
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><%= truncate(b.description.to_plain_text, :length => 100) %></p>
             </div>
+                <%= link_to "Read More",blog_path(b.id) ,class:"inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"%>
+            </div>
+          </div>
         </div>
+      <% end %>
 
-        </div>
-       
-        <% end %>
+
+
       </div>
 </section>
+
 
 <%= render "home/footer" %>

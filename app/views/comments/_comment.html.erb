@@ -1,5 +1,6 @@
 
 <div class=" drop-shadow-md p-10 w-full bg-[#f9f9fe] mt-5 flex flex-col justify-start content-start item-start" id="<%= dom_id(comment) %>">
+  
   <div class="flex flex-row flex-wrap justify-start content-start">
     <div>
     <img src="https://ghost.estudiopatagon.com/maktub/content/images/size/w120h120/2022/05/mixkit-desks-in-a-cool-co-working-space-with-an-office-dog-399-desktop-wallpaper.jpg" class="rounded-full w-14 h-14"/>
@@ -18,11 +19,6 @@
   <span class="text-[#5e6676] text-base font-medium antialiased "><%= comment.body %></span>
   </div>
   <div class="py-5">
-        
         <%=link_to "Reply" ,reply_path(comment_id: comment.id ,blog_id: comment.blog_id),class:"text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"%> 
-        
-        <%= link_to "Edit" ,blogs_path, class:"text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900 "%>
-        <%= link_to "delete",delete_comment_path(id: comment.id,blog_id: comment.blog_id), class:"text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" %>
-   
   </div>
 </div>

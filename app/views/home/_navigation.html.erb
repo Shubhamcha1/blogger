@@ -18,11 +18,25 @@
       </div>
       <nav class="hidden md:flex space-x-10 w-96">
         
-        
+        <%if params[:controller] == "home" && params[:action] == "index"%>
+        <%= link_to "Home" , root_path ,class:"text-base font-medium text-[#4b4870] hover:text-gray-900 border-solid border-[#4b4870] border-b-2"%>
+        <%else%>
         <%= link_to "Home" , root_path ,class:"text-base font-medium text-[#4b4870] hover:text-gray-900"%>
-        <%= link_to "Blogs" ,blogs_path,class:"ext-base font-medium text-[#4b4870] hover:text-gray-900"%>
-        <a href="#" class="text-base font-medium text-[#4b4870] hover:text-gray-900"> Membership </a>
+        <%end%>
+        
+        
+        <%if current_user != nil%>
+        <%if params[:controller] == "blogs" && params[:action] == "my_blogs"%>
+        <%= link_to "My Blogs" ,my_blogs_path,class:"ext-base font-medium text-[#4b4870] hover:text-gray-900 border-solid border-[#4b4870] border-b-2"%>
+        <%else%>
+        <%= link_to "My Blogs" ,my_blogs_path,class:"ext-base font-medium text-[#4b4870] hover:text-gray-900"%>
+        <%end%>
+        <%end%>
+       
         <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900"> About </a>
+
+        <a href="#" class="text-base font-medium text-[#4b4870] hover:text-gray-900"> Contact us</a>
+        
       </nav>
       <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0 pr-10">
 
@@ -31,9 +45,11 @@
           
         <%= link_to "Signup",new_user_registration_path,class:"ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-[#4b4870] hover:bg-[#4b4872]" %>
         <%else%>
-        
+        <%if params["controller"] == "blogs" && params["action"] == "new"%>
+        <%=link_to "My Blogs" , new_blog_path ,class:"ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-[#4b4870] hover:bg-[#4b4870]" %>
+        <%else%>
         <%=link_to "Create Blog" , new_blog_path ,class:"ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-[#4b4870] hover:bg-[#4b4870]" %>
-
+        <%end%>
      <!--<%= link_to "logout", destroy_user_session_path ,data: { turbo_method: "delete" },class:"whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900" %>  -->
         
          <div class="ml-3 relative">
@@ -43,12 +59,14 @@
               <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
             </button>
           </div>
-          <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+          <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" id="user-menu-list">
             <!-- Active: "bg-gray-100", Not Active: "" -->
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
-          </div>
+             <% if current_user != nil %>
+            <%= link_to "Your Profile", user_profile_path ,class:"block px-4 py-2 text-sm text-gray-700"%>
+            <%= link_to "My Blog", user_blog_path ,class:"block px-4 py-2 text-sm text-gray-700"%>
+            <%= link_to "Sign out", destroy_user_session_path ,data: { turbo_method: "delete" } ,class:"block px-4 py-2 text-sm text-gray-700"%>
+            <%end%>
+           </div>
         </div>
 
         <%end%>
@@ -56,4 +74,10 @@
     </div>
   </div>
 
- 
+ <script>
+ $(document).ready(function(){
+    $("#user-menu-button").click(function(){
+      $("#user-menu-list").slideToggle();
+    });
+  });
+ </script>

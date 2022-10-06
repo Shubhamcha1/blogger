@@ -6,17 +6,15 @@
             <div class="mb-10 p-10 shadow-md bg-white hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative rounded-lg">
                 <div class="flex flex-col flex-wrap justify-center content-center item-center">
                     <div class="pt-5 w-full">
-                         <div class="w-6/12 mx-auto">
+                         <div class="">
                          <%= render partial: "comments/form", locals: { comment: Comment.new } %>
                         </div>
-
-                        <% @comment.each do | comment | %>
-                          <%= turbo_stream_from comment, :comments %>
-                         <div id="<%= "#{dom_id(comment)}_comments" %>">
-                            <%= render comment.comment %>
-                        </div>
-
-                        <% end %>
+                            <%= turbo_stream_from @blog, :comments %>
+                                <div id="<%= "#{dom_id(@blog)}_comments" %>">
+                                </div>
+                            <% @comment.each do | comment | %>
+                                <%= render comment.comment %>
+                            <% end %>
                     </div>  
                 </div>  
             </div>
@@ -27,7 +25,4 @@
         <%= render "home/quicklinks" %> 
     </div>
 </section>
-
-
-
 <%= render "home/footer" %>

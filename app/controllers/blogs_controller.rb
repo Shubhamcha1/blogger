@@ -6,8 +6,15 @@ class BlogsController < ApplicationController
 
   # GET /blogs or /blogs.json
   def index
-    @blogs = Blog.all
+    @blogs = Blog.all.limit(3)  
   end
+
+  def my_blogs
+    @blogs = Blog.where(user_id: current_user.id).order(created_at: :desc)
+  end 
+
+
+
 
   # GET /blogs/1 or /blogs/1.json
   def show
@@ -25,7 +32,12 @@ class BlogsController < ApplicationController
     if current_user != nil
     @viewed = UserVisitBlog.where(user_id: current_user.id).order(created_at: :desc).limit(3)
     end 
+    
 
+    @comment_replies = @blog.comment_replies.pluck(:comment_id)
+    @allcomments = @blog.comments
+    @comments = @allcomments.where.not(id: @comment_replies)
+    
   end
 
   #categories list
@@ -35,14 +47,15 @@ class BlogsController < ApplicationController
     @categories = MasterCategory.all
 
     #fetch blog based on categories 
-    @cat_blog = Blog.where(master_categories_id: params[:cat_id])
+    @cat_blog = Blog.where(master_categories_id: params[:cat_id]).order(created_at: :desc)
   end
 
 
-
+ 
   # GET /blogs/new
   def new
     @blog = Blog.new
+
   end
 
   # GET /blogs/1/edit
