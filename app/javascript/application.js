@@ -19,6 +19,27 @@ $('.select').select2({
     tags: true,
     tokenSeparators: [',', ' ']
 });
+
+/* modal for confirmation to delete*/
+$(document).ready(function(){
+  $("#delete_btn").click(function(){
+    $("#delete_blog_confirmation").show();
+  });
+
+ $("#close_delete_modal").click(function(){
+    $("#delete_blog_confirmation").hide();
+  });
+
+  $("#cancel_delete").click(function(){
+      $("#delete_blog_confirmation").hide();
+    });
+});
+
+
+
+
+
+
 /* this function is used to convert array into string for thag input field 
 function set_tag_string(){
 var set_string = $('#blog_tag_list').val().join(',');

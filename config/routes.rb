@@ -17,6 +17,10 @@ get "category" ,to: "blogs#categories_blog_list" ,as: :categories_list
 #list of user blogs with edit option
 get "my_blogs" ,to: "blogs#my_blogs", as: :my_blogs
 
+#delete blog 
+get "delete_blog" ,to: "blogs#destroy", as: :delete_blog
+
+
 #like the blogs in blogger 
   
 get "like" ,to: "likes#like" , as: :like
