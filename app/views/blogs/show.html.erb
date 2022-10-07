@@ -70,19 +70,21 @@
                         <% end %>
                     </div>
                     </div>
-
+                    <%if current_user != nil%>
                     <div class="px-16 pb-10">
                          <div class="flex flex-row flex-wrap justify-center content-center item-center">
-                        <div class="py-2 px-5 mr-2">
+                            <div class="py-2 px-5 mr-2">
                             <% if @likes == nil%>
                                 <%= render partial:  "likes/like" , locals: {like: Like.new} %>
                             <% else%>
                             <%= turbo_stream_from "unlike" %>
                             <%= render partial:  "likes/unlike" , locals: {unlike: Like.new} %>
                             <%end%>
-                        </div>
+                            </div>
                         </div>
                     </div>
+                    <%end%>
+
             </div>  
          </div>
           <div class="p-10 mb-10 shadow-md bg-white hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative rounded-lg">
@@ -97,7 +99,7 @@
                         <span class="text-2xl text-[#5e6676]"><%=@blog.user.name.capitalize%></span>
                     </div>  
                     <div class="px-10 text-center leading-7">
-                        <span class=" text-[#5e6676] text-base font-medium antialiased text-center">Hello! My name is shubham, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</span>
+                        <span class=" text-[#5e6676] text-base font-medium antialiased text-center"><%=@blog.user.about.capitalize%></span>
                     </div>
                     <div class="flex flex-row justify-center content-center item-center pt-6">
                         <div class="mr-3">
@@ -139,3 +141,21 @@
 
 
 <%= render "home/footer" %>
+
+<script>
+/* like */
+  $(document).ready(function(){
+    $(".like").click(function(){
+      $(".like").hide();
+      $(".unlike").show();
+    });
+  });
+/* unlike to like */
+  $(document).ready(function(){
+    $(".unlike").click(function(){
+      $(".unlike").hide();
+      $(".like").show();
+    });
+  });
+
+</script>

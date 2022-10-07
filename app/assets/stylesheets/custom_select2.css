@@ -1,0 +1,23 @@
+
+.select2-selection__choice{
+ background-color: #4b4870 !important;
+ color:white !important;
+ border-color:#4b4870 !important;
+}
+/*unorder list render */
+.select2-selection ,.select2-selection--multiple{
+    padding-top:6px !important;
+    padding-bottom:10px !important;
+    background-color: #F9FAFB !important;
+    border-color: #D1D5DB !important;
+    border-radius: 8px !important;
+
+}
+/* tag remove btn */
+.select2-selection__choice__remove{
+    color:white !important;
+}
+
+.select:focus{
+    border-color:#3b82f6 !important;
+}

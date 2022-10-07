@@ -23,13 +23,8 @@
 -->
   <label for="tag_list" class="block mb-2 text-lg font-medium text-[#4b4870] dark:text-gray-400">Tags</label>
   <select class="select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" multiple="multiple" id="blog_tag_list" >
-  <option>orange</option>
-  <option>white</option>
-  <option>purple</option>
   </select>
-
 <input type="hidden" name="blog[tag_list]" id="tag_list" />
-
 </div>
 
 <div class="py-2">
@@ -41,3 +36,22 @@
   </div>
 <% end %>
 
+<script>
+$('.select').select2({
+    tags: true,
+    tokenSeparators: [',', ' ']
+});
+
+/* this function is used to convert array into string for thag input field */
+function set_tag_string(){
+var set_string = $('#blog_tag_list').val().join(',');
+$("#tag_list").val(set_string);
+}
+
+/* this function is used for the on click blog submit button that time it set the value of tags by calling the function */
+$(document).ready(function() {
+    $('.blog_submit').click(function() {
+        set_tag_string();
+    });
+});
+</script>

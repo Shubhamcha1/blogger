@@ -10,7 +10,9 @@ class BlogsController < ApplicationController
   end
 
   def my_blogs
+    if current_user != nil
     @blogs = Blog.where(user_id: current_user.id).order(created_at: :desc)
+    end
   end 
 
 

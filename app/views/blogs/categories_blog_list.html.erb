@@ -3,9 +3,14 @@
 <%= render "home/categories"%>
 <!--Categories listing tiles-->
 <section class="bg-[#f9f9fe] px-24">
+    <%if @cat_blog.empty?()%>
+    <div class="flex flex-row justify-center align-center content-center pt-14 pb-36 mb-5">
+      <div class=" h-56 flex flex-col justify-center content-center">
+          <span class="text-5xl text-[#4b4870]">Oops, No Blog Found</span>
+      </div>
+    </div>
+   <%else%>
   <div class="flex flex-row flex-wrap justify-self-auto content-between">
-   <%if @cat_blog.empty?()%>
-   <%end%>
       <%@cat_blog.each do | b | %>
        <div class="w-4/12 mb-6">
         <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
@@ -16,7 +21,7 @@
             <%end%>
             <div class="p-5">
               <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><%=h truncate(b.title.capitalize, :length => 25) %></h5>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-[#4b4870] dark:text-white"><%=h truncate(b.title.capitalize, :length => 25) %></h5>
               </a>
             <div class="h-24">
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><%= truncate(b.description.to_plain_text, :length => 100) %></p>
@@ -26,10 +31,9 @@
           </div>
         </div>
       <% end %>
-
-
-
       </div>
+
+      <%end%>
 </section>
 
 
