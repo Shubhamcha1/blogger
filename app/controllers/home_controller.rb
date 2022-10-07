@@ -2,16 +2,14 @@ class HomeController < ApplicationController
 	 before_action :fetch_list, only: %i[index]
 	
 	def index
-	
-
+		#fetch all blog in index page
+		@blogs = Blog.paginate(page: params[:page],per_page: 5).order(created_at: :desc)
 	end
 
 	private
 
 	def fetch_list
-		#fetch all blog in index page
-		@blogs = Blog.all.order(created_at: :desc)
-
+		
 		#fetch categories list from database
 		@categories = MasterCategory.all
 

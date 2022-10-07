@@ -83,3 +83,6 @@ gem 'acts-as-taggable-on', '~> 9.0', '>= 9.0.1'
 
 
 gem 'jquery-rails', '~> 4.4'
+
+#use for the add pagination on index 
+gem 'will_paginate', '~> 3.3', '>= 3.3.1'
