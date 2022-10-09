@@ -41,6 +41,8 @@ class CommentsController < ApplicationController
   def reply
        @blog = Blog.find(params[:blog_id])
        @comment = CommentReply.where(reply_id: params[:comment_id]).order(created_at: :desc)
+
+       @master_comment = Comment.find(params[:comment_id])
   end
 
 
@@ -60,7 +62,31 @@ class CommentsController < ApplicationController
   end
 
 
+  def update
+    @categories = MasterCategory.all
+		#fetch latest in index page 
+		@latest = Blog.order(id: :desc).limit(3)
+    		#fetch recent viewed 
+		if current_user != nil
+      @viewed = UserVisitBlog.where(user_id: current_user.id).order(created_at: :desc).limit(3)
+      end 
+      @comment = Comment.find(params[:comment_id])
+  end
 
+
+  def update_comment
+    update = Comment.find(params[:comment_id])
+    if update.update(body: params[:body])
+        if params[:master_comment_id] == 0
+            redirect_to blog_path(params[:blog_id])
+        else
+            redirect_to reply_path(comment_id: params[:master_comment_id],blog_id: params[:blog_id])
+        end
+    end
+  end
+
+
+  
 
   private 
 

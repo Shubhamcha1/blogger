@@ -37,6 +37,10 @@ get "unlike" ,to: "likes#unlike" , as: :unlike
 
   get "reply_delete" ,to: "comments#reply_delete", as: :reply_delete
 
+  get "update",to: "comments#update",as: :update
+
+  get "update_comment",to: "comments#update_comment", as: :update_comment
+
 #profile route 
 
   get "/user/profile" ,to: "profile#profile" ,as: :user_profile

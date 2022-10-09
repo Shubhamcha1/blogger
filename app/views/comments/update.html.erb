@@ -1,0 +1,32 @@
+<%= render "home/navigation" %>
+ 
+<section class="bg-[#f9f9fe] pt-10">
+    <div class="flex flex-row flex-wrap justify-start content-start item-start px-10">
+        <div class="w-3/4 px-16">
+            <div class="mb-10 p-10 shadow-md bg-white hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative rounded-lg">
+                <div class="flex flex-col flex-wrap justify-center content-center item-center">
+                    <div class="pt-5 w-full">
+                        
+                        <div class="text-center">
+                            <span class="text-4xl font-semibold text-[#4b4870]">Comment Update</span>
+                        </div>
+                        <div class="pt-10 px-20">
+                       <%= form_with url: update_comment_path,method: :get do |form| %>
+                        <%= form.text_field :body , value: @comment.body,class:"block p-4 w-full h-36 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"%>
+                        <%=form.hidden_field :comment_id , value: params[:comment_id]%>
+                        <%=form.hidden_field :blog_id , value: params[:blog_id]%>
+                        <%=form.hidden_field :master_comment_id , value: params[:master_id]%>
+                        <%= form.submit "update", class:"text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-3 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"%>
+                        <% end %>
+                        </div>
+                    </div>  
+                </div>  
+            </div>
+          
+        </div>
+
+    <!-- quicklinks -->
+        <%= render "home/quicklinks" %> 
+    </div>
+</section>
+<%= render "home/footer" %>

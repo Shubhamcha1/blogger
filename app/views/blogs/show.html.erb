@@ -78,10 +78,10 @@
           <div class="p-10 mb-10 shadow-md bg-white hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative rounded-lg">
                 <div class="flex flex-col flex-wrap justify-center content-center item-center">
                       
-                    <div class="flex flex-row justify-center">
+                    <div class="flex flex-row justify-center ">
                          <%if @blog.user.image.attached?%>
-                        <div>
-                        <%=image_tag @blog.user.image.variant(resize: "100X100") ,class:"w-24 h-24 rounded-full"%>
+                        <div class="object-cover">
+                        <%=image_tag @blog.user.image.variant(resize: "150x150") ,class:"rounded-lg"%>
                        </div>
                         <%else%>
                         <div>
@@ -119,12 +119,14 @@
                         <span class="text-4xl font-semibold text-[#4b4870]">Comments</span>
                     </div>
                     <div class="pt-5 w-full">
+                        <%if current_user != nil%>
                         <div class="">
                          <%= render partial: "comments/form", locals: { comment: Comment.new } %>
                         </div>
                          <%= turbo_stream_from @blog, :comments %>
                          <div id="<%= "#{dom_id(@blog)}_comments" %>">             
                         </div>
+                        <%end%>
 
 
                 <!--master commnent section-->
@@ -143,8 +145,10 @@
                             <div class="flex flex-col justify-start content-center px-6">
                             <div>
                                 <span class="text-xl text-[#5e6676]"><%= comment.user.name.capitalize %></span>
+                                <%if current_user != nil%>
                                 <%if current_user.id == comment.user.id%>
                                 <span class="px-2"><%=link_to "Delete" ,delete_comment_path(comment_id: comment.id,blog_id: comment.blog_id),class:"text-[#f0555f] text-sm"%></span>
+                                <%end%>
                                 <%end%>
                             </div>
                             <div>
@@ -156,14 +160,16 @@
                         <div class="px-20 py-4">
                             <span class="text-[#5e6676] text-base font-medium antialiased "><%= comment.body %></span>
                         </div>
-                        <%if current_user.id == comment.user.id%>
                         <div class="py-5 px-20">
                             <span class="text-[#4b4870]"><%=link_to "Reply" ,reply_path(comment_id: comment.id ,blog_id: comment.blog_id),class:""%> - <%= comment.reply.count%> </span>
+                        <%if current_user != nil%>
                             <%if current_user.id == comment.user.id%>
-                            <span class="text-[#d3d3d3]"> | <%=link_to "Edit"%></span>
+                            <span class="text-[#d3d3d3]"> | <%=link_to "Edit",update_path(comment_id: comment.id,blog_id: comment.blog_id)%></span>
                             <%end%>
                         </div>
                         <%end%>
+                    
+
                     </div>
                 <%end%>
 
@@ -176,14 +182,7 @@
         <%= render "home/quicklinks" %> 
     </div>
 </section>
-
-
 <%= render "home/footer" %>
-
-
-<%=params%>
-
-
 <script>
 
 /* like */
