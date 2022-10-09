@@ -2,7 +2,7 @@ class ProfileController < ApplicationController
 
     def profile 
         #fetch top liked blog
-        @my_blogs = Blog.where(user_id: current_user.id)  
+        @my_blogs = Like.select('blog_id, count(blog_id) as count').group(:blog_id).limit(6)
         
     end
 

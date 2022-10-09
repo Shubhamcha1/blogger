@@ -92,11 +92,12 @@
         </div>   
         
     <%end%>
-
-                    
+        <div class="flex flex-row justify-center pb-10">
+                <%= will_paginate @blogs %>                    
         </div>
-
-    <!-- quicklinks -->
-
+                    
     </div>
+</div>
 </section>
+<%=render "home/footer"%>
+

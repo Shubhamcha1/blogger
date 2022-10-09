@@ -16,15 +16,21 @@
                 </div> 
                 <div class="flex flex-col flex-wrap justify-center content-center item-center pb-12 px-12 w-full">  
                     <div class="flex flex-row justify-center">
+                        <%if current_user.image.attached?%>
+                        <div class="object-cover h-10 w-10">
+                        <%=image_tag current_user.image.variant(resize: "100x100") ,class:""%>
+                       </div>
+                        <%else%>
                         <div>
-                            <img src="https://ghost.estudiopatagon.com/maktub/content/images/size/w120h120/2022/05/mixkit-desks-in-a-cool-co-working-space-with-an-office-dog-399-desktop-wallpaper.jpg" class="rounded-full"/>
+                        <%=image_tag "user_default.png",class:"rounded-full h-20 w-20"%>
                         </div>
+                        <%end%>
                     </div>
                     <div class="text-center p-3">
-                        <span class="text-2xl text-[#5e6676]"><%=@current_user.name.capitalize%></span>
+                        <span class="text-2xl text-[#5e6676]"><%=current_user.name.capitalize%></span>
                     </div>  
                     <div class="px-10 text-center leading-7">
-                        <span class=" text-[#5e6676] text-base font-medium antialiased text-center"><%=@current_user.about.capitalize%></span>
+                        <span class=" text-[#5e6676] text-base font-medium antialiased text-center"><%=current_user.about.capitalize%></span>
                        <!--edit about form-->
                         <div class="edit_about hidden">
                         
@@ -53,20 +59,20 @@
       <%@my_blogs.each do | b | %>
        <div class="w-4/12 mb-6">
         <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-            <% if b&.rich_text_description&.embeds&.first&.url != nil %>
-                  <img src="<%= b&.rich_text_description&.embeds&.first&.url %>" class="rounded-tl-md rounded-tr-md h-60 w-full" >
+            <% if b.blog&.rich_text_description&.embeds&.first&.url != nil %>
+                  <img src="<%= b.blog&.rich_text_description&.embeds&.first&.url %>" class="rounded-tl-md rounded-tr-md h-60 w-full" >
             <%else%>
-                  <%= image_tag "#{b.master_categories.name.downcase}.jpeg", class:"rounded-md h-60 w-full"%>
+                  <%= image_tag "#{b.blog.master_categories.name.downcase}.jpeg", class:"rounded-md h-60 w-full"%>
             <%end%>
             <div class="p-5">
               <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><%=h truncate(b.title.capitalize, :length => 25) %></h5>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><%=h truncate(b.blog.title.capitalize, :length => 25) %></h5>
               </a>
             <div class="h-24">
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><%= truncate(b.description.to_plain_text, :length => 100) %></p>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><%= truncate(b.blog.description.to_plain_text, :length => 100) %></p>
             </div>
-                <%= link_to "Read More",blog_path(b.id) ,class:"inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"%>
-                <span class="float-right font-semibold text-sm py-2 text-[#4b4870]"><%=b.created_at.strftime("%d %b %Y")%></span>
+                <%= link_to "Read More",blog_path(b.blog.id) ,class:"inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"%>
+                <span class="float-right font-semibold text-sm py-2 text-[#4b4870]"><%=b.blog.created_at.strftime("%d %b %Y")%></span>
             </div>
           </div>
         </div>

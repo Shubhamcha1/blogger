@@ -11,7 +11,8 @@ class BlogsController < ApplicationController
 
   def my_blogs
     if current_user != nil
-    @blogs = Blog.where(user_id: current_user.id).order(created_at: :desc)
+    @blogs = Blog.paginate(page: params[:page],per_page: 4).where(user_id: current_user.id).order(created_at: :desc)
+   
     end
   end 
 
@@ -38,7 +39,7 @@ class BlogsController < ApplicationController
 
     @comment_replies = @blog.comment_replies.pluck(:comment_id)
     @allcomments = @blog.comments
-    @comments = @allcomments.where.not(id: @comment_replies)
+    @comments = @allcomments.where.not(id: @comment_replies).order(created_at: :desc)
     
   end
 
@@ -49,7 +50,7 @@ class BlogsController < ApplicationController
     @categories = MasterCategory.all
 
     #fetch blog based on categories 
-    @cat_blog = Blog.where(master_categories_id: params[:cat_id]).order(created_at: :desc)
+    @cat_blog = Blog.paginate(page: params[:page],per_page: 6).where(master_categories_id: params[:cat_id]).order(created_at: :desc)
   end
 
 

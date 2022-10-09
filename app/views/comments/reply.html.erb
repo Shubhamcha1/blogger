@@ -12,9 +12,47 @@
                             <%= turbo_stream_from @blog, :comments %>
                                 <div id="<%= "#{dom_id(@blog)}_comments" %>">
                                 </div>
-                            <% @comment.each do | comment | %>
-                                <%= render comment.comment %>
-                            <% end %>
+                            
+
+                            <!--nested comment section-->
+                              <%@comment.each do |comment|%>
+                        <div class="p-10 w-full flex flex-col justify-start content-start item-start border-b-2 border-solid border-gray">
+                            <div class="flex flex-row flex-wrap justify-start content-start">
+                            <%if comment.comment.user.image.attached?%>
+                        <div class="object-cover h-14 w-14">
+                        <%=image_tag comment.comment.user.image.variant(resize: "100x100") ,class:"w-14 h-14 rounded-full"%>
+                       </div>
+                        <%else%>
+                        <div>
+                        <%=image_tag "user_default.png",class:"rounded-full h-14 w-14"%>
+                        </div>
+                        <%end%>
+                            <div class="flex flex-col justify-start content-center px-6">
+                            <div>
+                                <span class="text-xl text-[#5e6676]"><%= comment.comment.user.name.capitalize %></span>
+                                <%if current_user.id == comment.comment.user.id%>
+                                <span class="px-2"><%=link_to "Delete",reply_delete_path(reply_id: comment.comment.id,blog_id: params[:blog_id],comment_id: params[:comment_id]) ,class:"text-[#f0555f] text-sm"%></span>
+                                <%end%>
+                            </div>
+                            <div>
+                                <span class="text-xs font-semibold text-[#D3D3D3] "><%= distance_of_time_in_words(comment.comment.created_at, 76.seconds.from_now) %></span>
+                            </div>
+      
+                            </div>
+                        </div>
+                        <div class="px-20 py-4">
+                            <span class="text-[#5e6676] text-base font-medium antialiased "><%= comment.comment.body %></span>
+                        </div>
+                        <%if current_user.id == comment.comment.user.id%>
+                        <div class="py-5 px-20">
+                              <%if current_user.id == comment.comment.user.id%>
+                            <span class="text-[#d3d3d3]"><%=link_to "Edit"%></span>
+                            <%end%>
+                        </div>
+                        <%end%>
+                    </div>
+                <%end%>
+
                     </div>  
                 </div>  
             </div>
@@ -26,3 +64,5 @@
     </div>
 </section>
 <%= render "home/footer" %>
+
+<%=params%>

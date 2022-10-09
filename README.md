@@ -52,4 +52,4 @@ today
 comment replies
 
 
-  
+  Like.select('post_id, count(post_id) as count').group(:post_id).limit(3)

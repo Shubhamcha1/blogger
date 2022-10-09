@@ -9,7 +9,17 @@
 <%= form_for(resource, as: resource_name, url: user_registration_path, html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
+ <div class="flex flex-row justify-center content-center">
+  <div class="image">
+  
+  </div>
+  <div class="upload_field">
+  <%=f.file_field :image %>
+  </div>
+ </div>
+
+
+ <div class="field">
     <%= f.label :email, class:"" %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email",class:"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
   </div>
@@ -61,23 +71,6 @@
   </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<%=params%>
 
 <%=render "home/footer"%>

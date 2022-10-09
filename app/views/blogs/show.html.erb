@@ -4,19 +4,7 @@
     <div class="flex flex-row flex-wrap justify-start content-start item-start px-10">
         <div class="w-3/4 px-16">
             <div class="mb-10 shadow-md bg-white hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative rounded-lg">
-                <div class="float-right p-1">
-                <!--edit blog icon-->
-                <%if current_user != nil %>
-                    <%if @blog.user_id ==  current_user.id%>
-                        <a href="/blogs/<%=@blog.id%>/edit">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 stroke-[#f0555f]">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                        </svg>
-                        </a>
-                    <%end%>
-                <%end%>
-                </div>
-
+               
                 <div class="flex flex-col flex-wrap justify-center content-center item-center">
                     <!-- image section --> 
                     <div class="">
@@ -59,7 +47,7 @@
             </div>  
                     <!--description-->
                     <div class="px-16 pb-10 ">
-                        <span class="text-base text-[#5e6676] text-lg font-medium antialiased text-center"><%= @blog.description.to_s %></span>
+                        <span class="text-base text-[#5e6676] text-lg font-medium antialiased"><%= @blog.description.to_s %></span>
                     </div> 
                     <div class="px-16 pb-10 ">
                          <div class="flex flex-row flex-wrap justify-center content-center item-center">
@@ -91,15 +79,25 @@
                 <div class="flex flex-col flex-wrap justify-center content-center item-center">
                       
                     <div class="flex flex-row justify-center">
-                      <div>
-                      <img src="https://ghost.estudiopatagon.com/maktub/content/images/size/w120h120/2022/05/mixkit-desks-in-a-cool-co-working-space-with-an-office-dog-399-desktop-wallpaper.jpg" class="rounded-full"/>
-                    </div>
+                         <%if @blog.user.image.attached?%>
+                        <div>
+                        <%=image_tag @blog.user.image.variant(resize: "100X100") ,class:"w-24 h-24 rounded-full"%>
+                       </div>
+                        <%else%>
+                        <div>
+                        <%=image_tag "user_default.png",class:"rounded-full h-24 w-24"%>
+                        </div>
+                        <%end%>
                     </div>
                     <div class="text-center p-3">
                         <span class="text-2xl text-[#5e6676]"><%=@blog.user.name.capitalize%></span>
                     </div>  
                     <div class="px-10 text-center leading-7">
+                    <%if @blog.user.about != nil%>
                         <span class=" text-[#5e6676] text-base font-medium antialiased text-center"><%=@blog.user.about.capitalize%></span>
+                    <%else%>
+                        <span class=" text-[#5e6676] text-base font-medium antialiased text-center"></span>
+                    <%end%>
                     </div>
                     <div class="flex flex-row justify-center content-center item-center pt-6">
                         <div class="mr-3">
@@ -125,10 +123,50 @@
                          <%= render partial: "comments/form", locals: { comment: Comment.new } %>
                         </div>
                          <%= turbo_stream_from @blog, :comments %>
-                         <div id="<%= "#{dom_id(@blog)}_comments" %>">    
-                            <%=render @comments %>        
-                            <!--<%= render @comments %> -->             
+                         <div id="<%= "#{dom_id(@blog)}_comments" %>">             
                         </div>
+
+
+                <!--master commnent section-->
+                    <%@comments.each do |comment|%>
+                        <div class="p-10 w-full flex flex-col justify-start content-start item-start border-b-2 border-solid border-gray">
+                            <div class="flex flex-row flex-wrap justify-start content-start">
+                            <%if comment.user.image.attached?%>
+                        <div class="object-cover h-14 w-14">
+                        <%=image_tag comment.user.image.variant(resize: "100x100") ,class:"w-14 h-14 rounded-full"%>
+                       </div>
+                        <%else%>
+                        <div>
+                        <%=image_tag "user_default.png",class:"rounded-full h-14 w-14"%>
+                        </div>
+                        <%end%>
+                            <div class="flex flex-col justify-start content-center px-6">
+                            <div>
+                                <span class="text-xl text-[#5e6676]"><%= comment.user.name.capitalize %></span>
+                                <%if current_user.id == comment.user.id%>
+                                <span class="px-2"><%=link_to "Delete" ,delete_comment_path(comment_id: comment.id,blog_id: comment.blog_id),class:"text-[#f0555f] text-sm"%></span>
+                                <%end%>
+                            </div>
+                            <div>
+                                <span class="text-xs font-semibold text-[#D3D3D3] "><%= distance_of_time_in_words(comment.created_at, 76.seconds.from_now) %></span>
+                            </div>
+      
+                            </div>
+                        </div>
+                        <div class="px-20 py-4">
+                            <span class="text-[#5e6676] text-base font-medium antialiased "><%= comment.body %></span>
+                        </div>
+                        <%if current_user.id == comment.user.id%>
+                        <div class="py-5 px-20">
+                            <span class="text-[#4b4870]"><%=link_to "Reply" ,reply_path(comment_id: comment.id ,blog_id: comment.blog_id),class:""%> - <%= comment.reply.count%> </span>
+                            <%if current_user.id == comment.user.id%>
+                            <span class="text-[#d3d3d3]"> | <%=link_to "Edit"%></span>
+                            <%end%>
+                        </div>
+                        <%end%>
+                    </div>
+                <%end%>
+
                     </div>               
                 </div>  
             </div>
@@ -142,7 +180,12 @@
 
 <%= render "home/footer" %>
 
+
+<%=params%>
+
+
 <script>
+
 /* like */
   $(document).ready(function(){
     $(".like").click(function(){

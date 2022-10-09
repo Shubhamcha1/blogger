@@ -36,7 +36,29 @@ $(document).ready(function(){
 });
 
 
+/*navigation*/
+$(document).ready(function(){
+  $("#user-menu-button").click(function(){
+    $("#user-menu-list").slideToggle();
+  });
+});
 
+
+
+/* like */
+$(document).ready(function(){
+  $(".like").click(function(){
+    $(".like").hide();
+    $(".unlike").show();
+  });
+});
+/* unlike to like */
+$(document).ready(function(){
+  $(".unlike").click(function(){
+    $(".unlike").hide();
+    $(".like").show();
+  });
+});
 
 
 

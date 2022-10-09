@@ -69,16 +69,25 @@
                 <!--This is tag and user profile display section-->
                 <div class=" flex flex-row flex-wrap justify-start content-center item-center">
                      <div class=" w-8/12  flex flex-row flex-wrap justify-start content-center ">
-                        <% b.tags.limit(3).each do |g| %>
+                        <% b.tags.limit(3).each do |tags| %>
                             <div class=" bg-white py-1 px-5 mr-4 rounded-full border border-[#f0555f] border-l-4 border-solid border-y-zinc-200 border-r-zinc-200">
-                                <span class="text-[#4b4870]"><%= g.name.capitalize %></span>   
+                                <span class="text-[#4b4870]"><%= tags.name.capitalize %></span>   
                             </div>
                         <% end %>
                     </div>  
                     <div class="w-4/12 flex flex-row justify-end content-center py-2">
                         <div class="flex items-center space-x-4">
-                            <img class="w-10 h-10 rounded-full" src="https://ghost.estudiopatagon.com/maktub/content/images/size/w300h300/2022/05/mixkit-man-holding-the-brim-of-a-yellow-fedora-that-covers-93-desktop-wallpaper.png" alt="UserImage">
-                            <div class="font-medium dark:text-white">
+                             <%if b.user.image.attached?%>
+                        <div class="object-cover h-10 w-10">
+                        <%=image_tag b.user.image.variant(resize: "100x100") ,class:"w-10 h-10 rounded-full"%>
+                       </div>
+                        <%else%>
+                        <div>
+                        <%=image_tag "user_default.png",class:"rounded-full h-10 w-10"%>
+                        </div>
+                        <%end%>
+                       <!--     <img class="w-10 h-10 rounded-full" src="https://ghost.estudiopatagon.com/maktub/content/images/size/w300h300/2022/05/mixkit-man-holding-the-brim-of-a-yellow-fedora-that-covers-93-desktop-wallpaper.png" alt="UserImage">
+                           --> <div class="font-medium dark:text-white">
                                 <div><%= b.user.name.capitalize%></div>
                                 <div class="text-sm text-gray-500 dark:text-gray-400">Joined in <%= b.user.created_at.strftime("%b %Y")%></div>
                             </div>

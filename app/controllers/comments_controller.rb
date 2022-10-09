@@ -45,12 +45,22 @@ class CommentsController < ApplicationController
 
 
   def delete
-      delete = Comment.find(params[:id])
-      if delete.destroy           
-      else 
-
-      end 
+      delete = Comment.find(params[:comment_id])
+     if delete.destroy           
+        redirect_to blog_path(params[:blog_id])
+     end 
   end 
+
+
+  def reply_delete
+    delete = Comment.find(params[:reply_id])
+    if delete.destroy
+      redirect_to reply_path(comment_id: params[:comment_id],blog_id: params[:blog_id])
+    end 
+  end
+
+
+
 
   private 
 
@@ -66,7 +76,7 @@ class CommentsController < ApplicationController
 
 
   def comment
-    @comment = Comment.find(params[:comment_id])
+   # @comment = Comment.find(params[:comment_id])
     #fetch latest 
     @latest = Blog.order(id: :desc).limit(3)
 
