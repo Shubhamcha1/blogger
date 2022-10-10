@@ -22,7 +22,7 @@
                        </div>
                         <%else%>
                         <div>
-                        <%=image_tag "user_default.png",class:"rounded-full h-20 w-20"%>
+                        <%=image_tag "user_default.png",class:"rounded-full h-14 w-14"%>
                         </div>
                         <%end%>
                     </div>
@@ -30,7 +30,9 @@
                         <span class="text-2xl text-[#5e6676]"><%=current_user.name.capitalize%></span>
                     </div>  
                     <div class="px-10 text-center leading-7">
+                        <%if current_user.about != nil%>
                         <span class=" text-[#5e6676] text-base font-medium antialiased text-center"><%=current_user.about.capitalize%></span>
+                       <%end%>
                        <!--edit about form-->
                         <div class="edit_about hidden">
                         
