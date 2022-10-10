@@ -1,2 +1,2 @@
-web: bin/rails server -p ${:PORT} -e ${RACK_ENV:-production}
+web: bundle exec puma -t 5:5 -e ${RACK_ENV:-development}
 css: bin/rails tailwindcss:watch
