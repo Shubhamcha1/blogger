@@ -104,6 +104,11 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
 
+  config.action_cable.url = 'wss://popblogger.herokuapp.com/cable'
+  config.action_cable.allowed_request_origins = ['https://popblogger.herokuapp.com', 'http://popblogger.herokuapp.com']
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+
+
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
