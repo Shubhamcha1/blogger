@@ -83,4 +83,5 @@ if ENV["RAILS_LOG_TO_STDOUT"].present?
   logger.formatter = config.log_formatter
   config.logger = ActiveSupport::TaggedLogging.new(logger)
 end
+
 end
