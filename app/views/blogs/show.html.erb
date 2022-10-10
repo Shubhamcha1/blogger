@@ -52,7 +52,7 @@
                     <div class="px-16 pb-10 ">
                          <div class="flex flex-row flex-wrap justify-center content-center item-center">
                         <% @blog.tags.each do |g| %>
-                            <div class=" bg-white py-1 px-5 mr-4 rounded-full border border-[#f0555f] border-l-4 border-solid border-y-zinc-200 border-r-zinc-200">
+                            <div class=" bg-white py-1 px-5 mr-4 mb-2 rounded-full border border-[#f0555f] border-l-4 border-solid border-y-zinc-200 border-r-zinc-200">
                                 <span class="text-[#4b4870]"><%= g.name.capitalize %></span>   
                             </div>
                         <% end %>
@@ -123,10 +123,11 @@
                         <div class="">
                          <%= render partial: "comments/form", locals: { comment: Comment.new } %>
                         </div>
+                         <%end%>
                          <%= turbo_stream_from @blog, :comments %>
                          <div id="<%= "#{dom_id(@blog)}_comments" %>">             
                         </div>
-                        <%end%>
+                       
 
 
                 <!--master commnent section-->
@@ -146,9 +147,9 @@
                             <div>
                                 <span class="text-xl text-[#5e6676]"><%= comment.user.name.capitalize %></span>
                                 <%if current_user != nil%>
-                                <%if current_user.id == comment.user.id%>
-                                <span class="px-2"><%=link_to "Delete" ,delete_comment_path(comment_id: comment.id,blog_id: comment.blog_id),class:"text-[#f0555f] text-sm"%></span>
-                                <%end%>
+                                    <%if current_user.id == comment.user.id%>
+                                        <span class="px-2"><%=link_to "Delete" ,delete_comment_path(comment_id: comment.id,blog_id: comment.blog_id),class:"text-[#f0555f] text-sm"%></span>
+                                    <%end%>
                                 <%end%>
                             </div>
                             <div>
@@ -166,8 +167,9 @@
                             <%if current_user.id == comment.user.id%>
                             <span class="text-[#d3d3d3]"> | <%=link_to "Edit",update_path(comment_id: comment.id,blog_id: comment.blog_id)%></span>
                             <%end%>
+                        <%end%>   
                         </div>
-                        <%end%>
+                       
                     
 
                     </div>
