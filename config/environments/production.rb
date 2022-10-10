@@ -101,7 +101,7 @@ Rails.application.configure do
   # require "syslog/logger"
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'popblogger.herokuapp.com'}
 
 
   config.action_cable.url = 'wss://popblogger.herokuapp.com/cable'
