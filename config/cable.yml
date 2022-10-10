@@ -6,6 +6,6 @@ test:
   adapter: test
 
 production:
-  adapter: postgres
+  adapter: postgresql
   database: blogger_production
   username: blogger
