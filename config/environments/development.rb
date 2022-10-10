@@ -75,8 +75,7 @@ Rails.application.configure do
    config.assets.compile = true
 
    config.action_cable.url = 'wss://popblogger.herokuapp.com/cable'
-   config.action_cable.allowed_request_origins = [ 'https://popblogger.herokuapp.com/', /https:\/\/popblogger.herokuapp.*/ ]
-
+   config.action_cable.allowed_request_origins = ['https://popblogger.herokuapp.com', 'http://popblogger.herokuapp.com']
    config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
 if ENV["RAILS_LOG_TO_STDOUT"].present?
