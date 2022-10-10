@@ -6,6 +6,6 @@ test:
   adapter: test
 
 production:
-  adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
-  channel_prefix: blogger_production
+  adapter: postgres
+  database: blogger_production
+  username: blogger
