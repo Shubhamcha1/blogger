@@ -77,7 +77,7 @@ class CommentsController < ApplicationController
   def update_comment
     update = Comment.find(params[:comment_id])
     if update.update(body: params[:body])
-        if params[:master_comment_id] == 0
+        if params[:master_comment_id] == nil
             redirect_to blog_path(params[:blog_id])
         else
             redirect_to reply_path(comment_id: params[:master_comment_id],blog_id: params[:blog_id])
